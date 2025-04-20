@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cats vs Republicans Battle</title>
+    <style>
+        .game-container {
+            width: 800px;
+            height: 400px;
+            border: 2px solid black;
+            position: relative;
+            overflow: hidden;
+            background-color: #87CEEB;
+        }
+        .unit {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+        .tower {
+            position: absolute;
+            width: 100px;
+            height: 200px;
+            background-color: #808080;
+            bottom: 50px;
+        }
+        .floor {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 50px;
+            background-color: #8B4513;
+            z-index: 1;
+        }
+        .health-bar {
+            position: absolute;
+            top: -10px;
+            width: 50px;
+            height: 5px;
+            background-color: #ff0000;
+        }
+        .tower-health {
+            position: absolute;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 2px black;
+            top: -25px;
+            width: 100px;
+            text-align: center;
+        }
+        #leftTower {
+            left: 0;
+        }
+        #rightTower {
+            right: 0;
+        }
+        #leftTowerHealth {
+            left: 0;
+            top: -15px;
+        }
+        #rightTowerHealth {
+            right: 0;
+            top: -15px;
+        }
+        .controls {
+            margin: 10px;
+        }
+        #moneyDisplay {
+            font-size: 20px;
+            margin: 10px;
+        }
+        .unit::after {
+            content: ":3";
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            font-size: 20px;
+            color: white;
+            text-shadow: 1px 1px 2px black;
+        }
+        .unit.enemy::after {
+            content: ">:(";
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container" id="gameContainer">
+        <div class="tower" id="leftTower">
+            <div class="tower-health" id="leftTowerHealth"></div>
+        </div>
+        <div class="tower" id="rightTower">
+            <div class="tower-health" id="rightTowerHealth"></div>
+        </div>
+        <div class="floor"></div>
+        <div id="moneyDisplay">Money: 1000</div>
+    </div>
+    <div class="controls">
+        <h3>Deploy Cats:</h3>
+        <button onclick="game.deployUnit('basicCat')">Basic Cat ($100)</button>
+        <button onclick="game.deployUnit('tankCat')">Tank Cat ($250)</button>
+        <button onclick="game.deployUnit('ninjaCat')">Ninja Cat ($400)</button>
+        <button onclick="game.deployUnit('flyingCat')">Flying Cat ($300)</button>
+        <button onclick="game.deployUnit('magicCat')">Magic Cat ($500)</button>
+    </div>
+    <script src="battle-game.js"></script>
+</body>
+</html> 

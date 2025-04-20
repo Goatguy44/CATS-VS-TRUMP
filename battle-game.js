@@ -105,12 +105,16 @@ class Game {
         const unitData = this.unitTypes[type];
         if (this.money >= unitData.cost) {
             this.money -= unitData.cost;
+            const gameContainer = document.getElementById('gameContainer');
+            const containerHeight = gameContainer.offsetHeight;
+            const yPosition = containerHeight * 0.75; // Position at 75% of container height
+            
             const unit = {
                 type: type,
                 x: 120,
-                y: 300, // Fixed y position above the floor
+                y: yPosition,
                 health: unitData.health,
-                maxHealth: unitData.health, // Add maxHealth for health bar
+                maxHealth: unitData.health,
                 damage: unitData.damage,
                 speed: unitData.speed,
                 isEnemy: false
@@ -125,13 +129,16 @@ class Game {
         const enemyTypes = ['trump', 'desantis', 'cruz', 'mtg'];
         const randomType = enemyTypes[Math.floor(Math.random() * enemyTypes.length)];
         const unitData = this.unitTypes[randomType];
+        const gameContainer = document.getElementById('gameContainer');
+        const containerHeight = gameContainer.offsetHeight;
+        const yPosition = containerHeight * 0.75; // Position at 75% of container height
         
         const unit = {
             type: randomType,
             x: 680,
-            y: 300, // Fixed y position above the floor
+            y: yPosition,
             health: unitData.health,
-            maxHealth: unitData.health, // Add maxHealth for health bar
+            maxHealth: unitData.health,
             damage: unitData.damage,
             speed: unitData.speed,
             isEnemy: true

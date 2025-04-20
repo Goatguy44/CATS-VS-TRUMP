@@ -8,6 +8,7 @@ class Game {
         this.enemySpawnTimer = 0;
         this.leftTowerHealth = 20000;
         this.rightTowerHealth = 20000;
+        this.gameActive = true;
         
         // Unit definitions
         this.unitTypes = {
@@ -25,6 +26,78 @@ class Game {
         };
 
         this.gameLoop = this.gameLoop.bind(this);
+        this.checkOrientation = this.checkOrientation.bind(this);
+        
+        // Add orientation change listener
+        window.addEventListener('orientationchange', this.checkOrientation);
+        window.addEventListener('resize', this.checkOrientation);
+        this.checkOrientation();
+
+        requestAnimationFrame(this.gameLoop);
+    }
+
+    checkOrientation() {
+        const orientationWarning = document.getElementById('orientationWarning');
+        if (window.innerHeight > window.innerWidth) {
+            orientationWarning.style.display = 'flex';
+            this.pauseGame();
+        } else {
+            orientationWarning.style.display = 'none';
+            this.resumeGame();
+        }
+    }
+
+    pauseGame() {
+        this.gameActive = false;
+    }
+
+    resumeGame() {
+        this.gameActive = true;
+        requestAnimationFrame(this.gameLoop);
+    }
+
+    showGameOver(victory) {
+        const gameOverScreen = document.getElementById('gameOverScreen');
+        const gameOverTitle = document.getElementById('gameOverTitle');
+        const gameOverMessage = document.getElementById('gameOverMessage');
+
+        if (victory) {
+            gameOverTitle.textContent = '🎉 Victory! 🐱';
+            gameOverMessage.textContent = 'The cats have triumphed! Democracy is safe!';
+        } else {
+            gameOverTitle.textContent = '😿 Defeat';
+            gameOverMessage.textContent = 'The Republicans have won... but the resistance continues!';
+        }
+
+        gameOverScreen.style.display = 'flex';
+        this.gameActive = false;
+    }
+
+    restartGame() {
+        // Clear all units
+        this.units.forEach(unit => {
+            if (unit.element) {
+                unit.element.remove();
+            }
+        });
+        this.units = [];
+
+        // Reset game state
+        this.money = 1000;
+        this.moneyTimer = 0;
+        this.enemySpawnTimer = 0;
+        this.leftTowerHealth = 20000;
+        this.rightTowerHealth = 20000;
+        this.gameActive = true;
+
+        // Hide game over screen
+        document.getElementById('gameOverScreen').style.display = 'none';
+
+        // Update displays
+        this.updateMoneyDisplay();
+        this.updateHealthBars();
+
+        // Restart game loop
         requestAnimationFrame(this.gameLoop);
     }
 
@@ -100,6 +173,8 @@ class Game {
     }
 
     gameLoop() {
+        if (!this.gameActive) return;
+
         // Generate money over time
         this.moneyTimer++;
         if (this.moneyTimer >= this.moneyGenerationInterval) {
@@ -147,15 +222,15 @@ class Game {
                 this.leftTowerHealth -= unit.damage;
                 unit.element.remove();
                 if (this.leftTowerHealth <= 0) {
-                    alert("Game Over! Republicans Win :(");
-                    location.reload();
+                    this.showGameOver(false);
+                    return;
                 }
             } else if (!unit.isEnemy && unit.x >= 700) {
                 this.rightTowerHealth -= unit.damage;
                 unit.element.remove();
                 if (this.rightTowerHealth <= 0) {
-                    alert("Victory! Cats Win! :3 :3 :3");
-                    location.reload();
+                    this.showGameOver(true);
+                    return;
                 }
             }
         });
@@ -163,7 +238,9 @@ class Game {
         // Update health bars
         this.updateHealthBars();
 
-        requestAnimationFrame(this.gameLoop);
+        if (this.gameActive) {
+            requestAnimationFrame(this.gameLoop);
+        }
     }
 
     checkCollisions() {

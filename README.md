@@ -15,7 +15,7 @@ A fun tower defense game where cats battle against Republicans! Deploy different
 
 ## Play Now
 
-You can play the game here: [Play Cats vs Republicans Battle](https://[your-github-username].github.io/cats-v-trump/)
+You can play the game here: [Play Cats vs Republicans Battle](https://Goatguy44.github.io/cats-v-trump/)
 
 ## Local Development
 

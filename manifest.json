@@ -2,7 +2,7 @@
     "name": "Cats vs Republicans Battle",
     "short_name": "Cats vs GOP",
     "description": "A fun tower defense game where cats battle against Republicans!",
-    "start_url": "/",
+    "start_url": "/CATS-VS-TRUMP/",
     "display": "standalone",
     "background_color": "#f0f0f0",
     "theme_color": "#4CAF50",
